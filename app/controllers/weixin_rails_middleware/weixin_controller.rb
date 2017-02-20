@@ -31,6 +31,7 @@ module WeixinRailsMiddleware
       def check_weixin_legality
         check_result = @weixin_adapter.check_weixin_legality
         valid = check_result.delete(:valid)
+        check_result[:text] = check_result.delete(:plain) if check_result[:plain].present? && check_result[:text].nil?
         render check_result if action_name == "index"
         return valid
       end
